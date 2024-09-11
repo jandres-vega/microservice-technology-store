@@ -1,0 +1,16 @@
+server:
+  port: 3002
+
+spring:
+  application:
+    name: microservice-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: product
+          uri: http://localhost:4000
+          predicates:
+            - Path=/api/v1/**
