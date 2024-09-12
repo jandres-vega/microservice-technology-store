@@ -1,6 +1,7 @@
 package com.store.technology.productcatalogservice.persistence.repositoryImpl;
 
-import com.store.technology.productcatalogservice.domain.dto.CategoryDTO;
+import com.store.technology.productcatalogservice.domain.dto.request.CategoryRequestDTO;
+import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseDTO;
 import com.store.technology.productcatalogservice.domain.repository.CategoryRepository;
 import com.store.technology.productcatalogservice.persistence.crud.CategoryCrudRepository;
 import com.store.technology.productcatalogservice.persistence.entity.Category;
@@ -22,14 +23,20 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public CategoryDTO save(CategoryDTO categoryDTO) {
+    public CategoryRequestDTO save(CategoryRequestDTO categoryDTO) {
         Category category = categoryMapper.toCategory(categoryDTO);
-        return categoryMapper.toCategoryDTO(categoryCrudRepository.save(category));
+        return categoryMapper.toCategoryRequestDTO(categoryCrudRepository.save(category));
     }
 
     @Override
-    public List<CategoryDTO> findAll() {
+    public List<CategoryResponseDTO> findAll() {
         List<Category> categories = (List<Category>) categoryCrudRepository.findAll();
-        return categories.stream().map(categoryMapper::toCategoryDTO).toList();
+        return categoryMapper.toCategoryResponseDTO(categories);
+    }
+
+    @Override
+    public String deleteCategoryById(String id) {
+        categoryCrudRepository.deleteById(id);
+        return "Removed Category with ID: " + id;
     }
 }
