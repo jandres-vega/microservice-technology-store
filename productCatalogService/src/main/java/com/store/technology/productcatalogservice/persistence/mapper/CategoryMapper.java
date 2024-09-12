@@ -12,7 +12,6 @@ public interface CategoryMapper {
 
     @Mappings({
             @Mapping(target = "description", source = "description"),
-            @Mapping(target = "categoryId", source = "idCategory"),
             @Mapping(target = "categoryName", source = "nameCategory")
     })
     /*Return DTO*/
