@@ -1,4 +1,4 @@
-package com.store.technology.productcatalogservice.domain.dto;
+package com.store.technology.productcatalogservice.domain.dto.request;
 
 import com.store.technology.productcatalogservice.persistence.entity.Category;
 import com.store.technology.productcatalogservice.persistence.entity.Image;
