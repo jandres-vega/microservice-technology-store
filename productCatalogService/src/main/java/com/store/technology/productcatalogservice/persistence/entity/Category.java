@@ -3,6 +3,8 @@ package com.store.technology.productcatalogservice.persistence.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Table(name = "category")
 @Data
@@ -15,4 +17,6 @@ public class Category {
     @Column(name = "name_category")
     private String nameCategory;
     private String description;
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 }
