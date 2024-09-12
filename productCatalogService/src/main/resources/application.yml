@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: productCatalogService
+  config:
+    import: optional:configserver:http://localhost:3000

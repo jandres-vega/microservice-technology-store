@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: microservice-eureka
+  config:
+    import: optional:configserver:http://localhost:3000

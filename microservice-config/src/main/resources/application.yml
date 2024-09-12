@@ -1,0 +1,13 @@
+server:
+  port: 3000
+
+spring:
+  application:
+    name: microservice-config
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:/configurations
