@@ -1,7 +1,8 @@
 package com.store.technology.productcatalogservice.domain.service;
 
+import com.store.technology.productcatalogservice.domain.dto.request.ProductRequestDTO;
+import com.store.technology.productcatalogservice.domain.dto.response.ProductResponseDTO;
 import com.store.technology.productcatalogservice.domain.repository.ProductRepository;
-import com.store.technology.productcatalogservice.persistence.entity.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,11 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getProducts(){
+    public List<ProductResponseDTO> getProducts(){
         return productRepository.findAll();
+    }
+
+    public ProductResponseDTO saveProduct(ProductRequestDTO product){
+        return productRepository.save(product);
     }
 }
