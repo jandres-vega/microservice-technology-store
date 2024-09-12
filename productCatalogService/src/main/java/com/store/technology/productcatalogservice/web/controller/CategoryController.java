@@ -1,6 +1,7 @@
 package com.store.technology.productcatalogservice.web.controller;
 
-import com.store.technology.productcatalogservice.domain.dto.CategoryDTO;
+import com.store.technology.productcatalogservice.domain.dto.request.CategoryRequestDTO;
+import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseDTO;
 import com.store.technology.productcatalogservice.domain.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +20,17 @@ public class CategoryController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<CategoryDTO>> getAllCategories(){
+    public ResponseEntity<List<CategoryResponseDTO>> getAllCategories(){
         return ResponseEntity.status(HttpStatus.OK).body(categoryService.getAllCategories());
     }
 
     @PostMapping("/save")
-    public ResponseEntity<CategoryDTO> saveCategory(@RequestBody CategoryDTO categoryDTO){
+    public ResponseEntity<CategoryRequestDTO> saveCategory(@RequestBody CategoryRequestDTO categoryDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.saveCategory(categoryDTO));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteCategoryById(@PathVariable String id) {
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.deleteCategoryById(id));
     }
 }
