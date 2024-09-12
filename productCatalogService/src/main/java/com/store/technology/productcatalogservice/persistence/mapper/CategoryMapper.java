@@ -11,13 +11,15 @@ import org.mapstruct.Mappings;
 public interface CategoryMapper {
 
     @Mappings({
-            @Mapping(target = "idCategory", source = "categoryId"),
-            @Mapping(target = "nameCategory", source = "categoryName"),
-            @Mapping(target = "description", source = "description")
+            @Mapping(target = "description", source = "description"),
+            @Mapping(target = "categoryId", source = "idCategory"),
+            @Mapping(target = "categoryName", source = "nameCategory")
     })
-    CategoryDTO toCategory(Category category);
+    /*Return DTO*/
+    CategoryDTO toCategoryDTO(Category category);
 
+    /*Return entity*/
     @InheritInverseConfiguration
     @Mapping(target = "products", ignore = true)
-    Category toCategoryDTO(CategoryDTO categoryDTO);
+    Category toCategory(CategoryDTO categoryDTO);
 }
