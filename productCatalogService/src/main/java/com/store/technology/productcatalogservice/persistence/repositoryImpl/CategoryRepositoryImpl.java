@@ -2,6 +2,7 @@ package com.store.technology.productcatalogservice.persistence.repositoryImpl;
 
 import com.store.technology.productcatalogservice.domain.dto.request.CategoryRequestDTO;
 import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseDTO;
+import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseWithProductsDTO;
 import com.store.technology.productcatalogservice.domain.repository.CategoryRepository;
 import com.store.technology.productcatalogservice.persistence.crud.CategoryCrudRepository;
 import com.store.technology.productcatalogservice.persistence.entity.Category;
@@ -38,5 +39,11 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public String deleteCategoryById(String id) {
         categoryCrudRepository.deleteById(id);
         return "Removed Category with ID: " + id;
+    }
+
+    @Override
+    public CategoryResponseWithProductsDTO findCategoryWithProductsByName(String nameCategory) {
+        Category category = categoryCrudRepository.findByNameCategory(nameCategory);
+        return categoryMapper.toCategoryResponseWithProductsDTO(category);
     }
 }
