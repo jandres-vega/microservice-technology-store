@@ -4,7 +4,7 @@ import com.store.technology.productcatalogservice.persistence.entity.Product;
 import lombok.Data;
 
 @Data
-public class ImageDTO {
+public class ImageRequestDTO {
 
     private String idImage;
     private String url;
