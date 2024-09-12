@@ -2,6 +2,7 @@ package com.store.technology.productcatalogservice.web.controller;
 
 import com.store.technology.productcatalogservice.domain.dto.request.CategoryRequestDTO;
 import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseDTO;
+import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseWithProductsDTO;
 import com.store.technology.productcatalogservice.domain.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +33,10 @@ public class CategoryController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteCategoryById(@PathVariable String id) {
         return ResponseEntity.status(HttpStatus.OK).body(categoryService.deleteCategoryById(id));
+    }
+
+    @GetMapping("/find/{nameCategory}")
+    public ResponseEntity<CategoryResponseWithProductsDTO> findCategoryWithProductsByName(@PathVariable String nameCategory) {
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.findCategoryWithProductsByName(nameCategory));
     }
 }
