@@ -18,6 +18,8 @@ public class Product {
     private String description;
     private Double price;
     private Integer stock;
+    @Column(name = "id_category")
+    private String idCategory;
     @ManyToOne
     @JoinColumn(name = "id_category", insertable = false, updatable = false)
     private Category category;
