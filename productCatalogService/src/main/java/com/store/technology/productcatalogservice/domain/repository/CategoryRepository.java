@@ -1,11 +1,11 @@
 package com.store.technology.productcatalogservice.domain.repository;
 
-import com.store.technology.productcatalogservice.persistence.entity.Category;
+import com.store.technology.productcatalogservice.domain.dto.CategoryDTO;
 
 import java.util.List;
 
 public interface CategoryRepository {
 
-    Category save(Category category);
-    List<Category> findAll();
+    CategoryDTO save(CategoryDTO categoryDTO);
+    List<CategoryDTO> findAll();
 }
