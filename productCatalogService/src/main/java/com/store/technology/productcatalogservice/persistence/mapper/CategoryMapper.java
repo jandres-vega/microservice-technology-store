@@ -2,6 +2,7 @@ package com.store.technology.productcatalogservice.persistence.mapper;
 
 import com.store.technology.productcatalogservice.domain.dto.request.CategoryRequestDTO;
 import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseDTO;
+import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseWithProductsDTO;
 import com.store.technology.productcatalogservice.persistence.entity.Category;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -27,6 +28,14 @@ public interface CategoryMapper {
     CategoryResponseDTO toCategoryResponseDTO(Category category);
 
     List<CategoryResponseDTO> toCategoryResponseDTO(List<Category> categories);
+
+    @Mappings({
+            @Mapping(source = "idCategory", target = "id"),
+            @Mapping(source = "nameCategory", target = "category"),
+            @Mapping(source = "description", target = "description"),
+            @Mapping(source = "products", target = "products"),
+    })
+    CategoryResponseWithProductsDTO toCategoryResponseWithProductsDTO(Category category);
 
     @InheritInverseConfiguration
     @Mapping(target = "products", ignore = true)
