@@ -2,6 +2,8 @@ package com.store.technology.productcatalogservice.persistence.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Table(name = "product")
 @Data
@@ -19,5 +21,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "id_category", insertable = false, updatable = false)
     private Category category;
+    @OneToMany(mappedBy = "product")
+    private List<Image> images;
 
 }
