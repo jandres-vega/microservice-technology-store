@@ -2,6 +2,7 @@ package com.store.technology.productcatalogservice.domain.service;
 
 import com.store.technology.productcatalogservice.domain.dto.request.CategoryRequestDTO;
 import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseDTO;
+import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseWithProductsDTO;
 import com.store.technology.productcatalogservice.domain.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,9 @@ public class CategoryService {
 
     public String deleteCategoryById(String id) {
         return categoryRepository.deleteCategoryById(id);
+    }
+
+    public CategoryResponseWithProductsDTO findCategoryWithProductsByName(String nameCategory) {
+        return categoryRepository.findCategoryWithProductsByName(nameCategory);
     }
 }
