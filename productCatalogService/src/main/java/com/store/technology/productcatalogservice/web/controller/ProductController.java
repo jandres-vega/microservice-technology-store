@@ -3,6 +3,7 @@ package com.store.technology.productcatalogservice.web.controller;
 import com.store.technology.productcatalogservice.domain.dto.request.ProductRequestDTO;
 import com.store.technology.productcatalogservice.domain.dto.response.ProductResponseDTO;
 import com.store.technology.productcatalogservice.domain.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ProductResponseDTO> saveProduct(@RequestBody ProductRequestDTO product){
+    public ResponseEntity<ProductResponseDTO> saveProduct(@Valid @RequestBody ProductRequestDTO product){
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.saveProduct(product));
     }
 
