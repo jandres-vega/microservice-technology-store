@@ -4,6 +4,7 @@ import com.store.technology.productcatalogservice.domain.dto.request.CategoryReq
 import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseDTO;
 import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseWithProductsDTO;
 import com.store.technology.productcatalogservice.domain.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class CategoryController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<CategoryRequestDTO> saveCategory(@RequestBody CategoryRequestDTO categoryDTO){
+    public ResponseEntity<CategoryRequestDTO> saveCategory(@Valid @RequestBody CategoryRequestDTO categoryDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.saveCategory(categoryDTO));
     }
 
