@@ -25,12 +25,13 @@ public interface ProductMapper {
 
     List<ProductResponseDTO> toProductResponseDTO(List<Product> products);
 
-    @InheritInverseConfiguration(name = "toProductResponseDTO")
-    @Mappings({
-            @Mapping(target = "category", ignore = true),
-            @Mapping(target = "idProduct", ignore = true),
-            @Mapping(target = "images", ignore = true),
-            @Mapping(target = "idCategory", source = "id_category")
-    })
+@InheritInverseConfiguration(name = "toProductResponseDTO")
+@Mappings({
+        @Mapping(target = "category", ignore = true),
+        @Mapping(target = "idProduct", ignore = true),
+        @Mapping(target = "images", ignore = true),
+        @Mapping(target = "idCategory", source = "id_category"),
+        @Mapping(source = "product_name", target = "nameProduct"),
+})
     Product toProduct(ProductRequestDTO productRequestDTO);
 }
