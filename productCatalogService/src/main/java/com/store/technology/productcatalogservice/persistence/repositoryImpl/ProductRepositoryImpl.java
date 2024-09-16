@@ -34,4 +34,21 @@ public class ProductRepositoryImpl implements ProductRepository {
         List<Product> products = (List<Product>) productCrudRepository.findAll();
         return productMapper.toProductResponseDTO(products);
     }
+
+    @Override
+    public ProductResponseDTO getProductById(String id) {
+        Product product = productCrudRepository.findById(id).orElse(null);
+        return productMapper.toProductResponseDTO(product);
+    }
+
+    @Override
+    public boolean existsProductById(String id) {
+        return productCrudRepository.existsById(id);
+    }
+
+    @Override
+    public ProductResponseDTO getProductByName(String name) {
+        Product product = productCrudRepository.findByNameProduct(name);
+        return productMapper.toProductResponseDTO(product);
+    }
 }
