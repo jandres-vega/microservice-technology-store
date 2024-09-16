@@ -32,9 +32,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiResponseDTO> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
-        ApiResponseDTO response = new ApiResponseDTO(ex.getMessage(), request.getDescription(false), HttpStatus.NOT_FOUND.value());
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity<ApiResponseDTO> handleBaseException(BaseException ex, WebRequest request) {
+        String requestDescription = request.getDescription(false);
+
+        ApiResponseDTO response = new ApiResponseDTO(
+                ex.getMessage(),
+                requestDescription,
+                ex.getHttpStatus().value()
+        );
+
+        return new ResponseEntity<>(response, ex.getHttpStatus());
     }
 }
