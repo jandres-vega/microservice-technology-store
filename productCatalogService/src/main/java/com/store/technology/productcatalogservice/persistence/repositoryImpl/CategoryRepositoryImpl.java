@@ -46,4 +46,9 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         Category category = categoryCrudRepository.findByNameCategory(nameCategory);
         return categoryMapper.toCategoryResponseWithProductsDTO(category);
     }
+
+    @Override
+    public boolean existsCategoryById(String id) {
+        return categoryCrudRepository.existsById(id);
+    }
 }
