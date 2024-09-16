@@ -4,6 +4,8 @@ import com.store.technology.productcatalogservice.domain.dto.request.CategoryReq
 import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseDTO;
 import com.store.technology.productcatalogservice.domain.dto.response.CategoryResponseWithProductsDTO;
 import com.store.technology.productcatalogservice.domain.repository.CategoryRepository;
+import com.store.technology.productcatalogservice.exceptions.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,9 @@ public class CategoryService {
     }
 
     public String deleteCategoryById(String id) {
+        if (!categoryRepository.existsCategoryById(id)) {
+            throw  new ResourceNotFoundException("category not found", "id", id, HttpStatus.NOT_FOUND);
+        }
         return categoryRepository.deleteCategoryById(id);
     }
 
