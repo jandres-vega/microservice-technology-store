@@ -1,4 +1,5 @@
 package com.store.technology.productcatalogservice.persistence.entity;
+import com.store.technology.productcatalogservice.persistence.enums.ProductStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,6 +18,8 @@ public class Product {
     private String nameProduct;
     private String description;
     private Double price;
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status = ProductStatus.INCOMPLETE;
     private Integer stock;
     @Column(name = "id_category")
     private String idCategory;
