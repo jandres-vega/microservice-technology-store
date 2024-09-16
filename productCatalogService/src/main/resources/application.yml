@@ -3,3 +3,9 @@ spring:
     name: productCatalogService
   config:
     import: optional:configserver:http://localhost:3000
+aws:
+  credentials:
+    accessKey: ${ACCESS_KEY}
+    secretKey: ${SECRET_KEY}
+    s3:
+      bucket: ${BUCKET}

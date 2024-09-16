@@ -1,11 +1,17 @@
 package com.store.technology.productcatalogservice.domain.repository;
 
-import com.store.technology.productcatalogservice.persistence.entity.Product;
+import com.store.technology.productcatalogservice.domain.dto.request.ProductRequestDTO;
+import com.store.technology.productcatalogservice.domain.dto.response.ProductResponseDTO;
 
 import java.util.List;
 
 public interface ProductRepository {
 
-    Product save(Product product);
-    List<Product> findAll();
+    ProductResponseDTO save(ProductRequestDTO product);
+    List<ProductResponseDTO> findAll();
+    ProductResponseDTO getProductById(String id);
+
+    boolean existsProductById(String id);
+
+    ProductResponseDTO getProductByName(String name);
 }

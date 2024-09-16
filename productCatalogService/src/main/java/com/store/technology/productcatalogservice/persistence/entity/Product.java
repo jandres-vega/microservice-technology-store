@@ -1,6 +1,9 @@
 package com.store.technology.productcatalogservice.persistence.entity;
+import com.store.technology.productcatalogservice.persistence.enums.ProductStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -15,7 +18,15 @@ public class Product {
     private String nameProduct;
     private String description;
     private Double price;
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status = ProductStatus.INCOMPLETE;
     private Integer stock;
+    @Column(name = "id_category")
     private String idCategory;
+    @ManyToOne
+    @JoinColumn(name = "id_category", insertable = false, updatable = false)
+    private Category category;
+    @OneToMany(mappedBy = "product")
+    private List<Image> images;
 
 }

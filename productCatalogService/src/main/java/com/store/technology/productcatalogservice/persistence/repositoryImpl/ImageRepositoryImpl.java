@@ -1,20 +1,23 @@
 package com.store.technology.productcatalogservice.persistence.repositoryImpl;
 
 import com.store.technology.productcatalogservice.domain.repository.ImageRepository;
+
+import com.store.technology.productcatalogservice.persistence.crud.ImageCrudRepository;
 import com.store.technology.productcatalogservice.persistence.entity.Image;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @Repository
 public class ImageRepositoryImpl implements ImageRepository {
-    @Override
-    public Image save(Image image) {
-        return null;
+
+    private final ImageCrudRepository imageCrudRepository;
+
+    public ImageRepositoryImpl(ImageCrudRepository imageCrudRepository) {
+        this.imageCrudRepository = imageCrudRepository;
     }
 
     @Override
-    public List<Image> findAll() {
-        return List.of();
+    public Image addImageToProduct(String productId, MultipartFile file) {
+        return null;
     }
 }
