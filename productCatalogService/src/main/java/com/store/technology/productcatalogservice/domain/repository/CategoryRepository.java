@@ -12,4 +12,5 @@ public interface CategoryRepository {
     List<CategoryResponseDTO> findAll();
     String deleteCategoryById(String id);
     CategoryResponseWithProductsDTO findCategoryWithProductsByName(String nameCategory);
+    boolean existsCategoryById(String id);
 }
