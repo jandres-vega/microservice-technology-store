@@ -9,4 +9,9 @@ public interface ProductRepository {
 
     ProductResponseDTO save(ProductRequestDTO product);
     List<ProductResponseDTO> findAll();
+    ProductResponseDTO getProductById(String id);
+
+    boolean existsProductById(String id);
+
+    ProductResponseDTO getProductByName(String name);
 }
