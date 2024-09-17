@@ -1,5 +1,6 @@
 package com.store.technology.productcatalogservice.domain.service;
 
+import com.store.technology.productcatalogservice.domain.dto.request.ImageRequestDTO;
 import com.store.technology.productcatalogservice.domain.dto.response.BucketDTO;
 import com.store.technology.productcatalogservice.domain.dto.response.ProductResponseDTO;
 import com.store.technology.productcatalogservice.domain.repository.IBucket;
@@ -20,13 +21,21 @@ public class ImageService {
         this.bucketDataSource = bucketDataSource;
     }
 
-    public String addImageToProduct(String productId, MultipartFile file) {
+    public ProductResponseDTO addImageToProduct(String productId, MultipartFile file) {
         ProductResponseDTO product = productService.getProductById(productId);
 
         BucketDTO bucketDTO = bucketDataSource.uploadFile(file);
+        String urlImage = generateS3Url(bucketDTO.getBucket(), bucketDTO.getFileName());
+        ImageRequestDTO imageRequestDTO = new ImageRequestDTO(
+                urlImage,
+                productId
+        );
+        imageRepository.addImageToProduct(imageRequestDTO);
+        product.setImage(urlImage);
+        return  product;
+    }
 
-        System.out.println("BUCKET " + bucketDTO);
-        return "BUCKET ";
-
+    public static String generateS3Url(String bucketName, String fileName){
+        return "https://" + bucketName + ".s3.amazonaws.com/" + fileName;
     }
 }
