@@ -1,11 +1,9 @@
 package com.store.technology.productcatalogservice.domain.repository;
 
-import com.store.technology.productcatalogservice.persistence.entity.Image;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import com.store.technology.productcatalogservice.domain.dto.request.ImageRequestDTO;
 
 public interface ImageRepository {
 
-    Image addImageToProduct(String productId, MultipartFile file);
+    void addImageToProduct(ImageRequestDTO imageRequestDTO);
 }
