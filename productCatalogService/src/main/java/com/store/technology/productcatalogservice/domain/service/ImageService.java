@@ -8,6 +8,9 @@ import com.store.technology.productcatalogservice.domain.repository.ImageReposit
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ImageService {
 
@@ -21,21 +24,24 @@ public class ImageService {
         this.bucketDataSource = bucketDataSource;
     }
 
-    public ProductResponseDTO addImageToProduct(String productId, MultipartFile file) {
+    public ProductResponseDTO addImageToProduct(String productId, MultipartFile[] files) {
         ProductResponseDTO product = productService.getProductById(productId);
 
-        BucketDTO bucketDTO = bucketDataSource.uploadFile(file);
-        String urlImage = generateS3Url(bucketDTO.getBucket(), bucketDTO.getFileName());
-        ImageRequestDTO imageRequestDTO = new ImageRequestDTO(
-                urlImage,
-                productId
-        );
-        imageRepository.addImageToProduct(imageRequestDTO);
-        product.setImage(urlImage);
+        List<BucketDTO> bucketDTO = bucketDataSource.uploadFile(files);
+        List<String> listUrl = generateS3Url(bucketDTO);
+        for (String url : listUrl) {
+            imageRepository.addImageToProduct(new ImageRequestDTO(url, productId));
+        }
+        product.setImages(listUrl);
         return  product;
     }
 
-    public static String generateS3Url(String bucketName, String fileName){
-        return "https://" + bucketName + ".s3.amazonaws.com/" + fileName;
+    public static List<String> generateS3Url(List<BucketDTO> bucketDTO) {
+        List<String> listUrl= new ArrayList<>();
+        for (BucketDTO bucket : bucketDTO) {
+            String url = "https://" + bucket.getBucket() + ".s3.amazonaws.com/" + bucket.getFileName();
+            listUrl.add(url);
+        }
+        return listUrl;
     }
 }
