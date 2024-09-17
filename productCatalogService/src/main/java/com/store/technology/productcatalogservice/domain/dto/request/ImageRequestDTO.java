@@ -1,12 +1,12 @@
 package com.store.technology.productcatalogservice.domain.dto.request;
 
-import com.store.technology.productcatalogservice.persistence.entity.Product;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class ImageRequestDTO {
 
-    private String idImage;
-    private String url;
-    private Product product;
+    private String urlImage;
+    private String product_id;
 }
