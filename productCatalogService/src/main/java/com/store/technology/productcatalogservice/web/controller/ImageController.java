@@ -17,9 +17,7 @@ public class ImageController {
     }
 
     @PostMapping("/upload/{productId}")
-    public ResponseEntity<?> saveImageProduct(@PathVariable String productId, @RequestParam("file") MultipartFile file){
-        System.out.println("PRODUCT_ID " + productId);
-        System.out.println("IMAGE CONTROLLER " + file);
-        return ResponseEntity.status(HttpStatus.CREATED).body(imageService.addImageToProduct(productId, file));
+    public ResponseEntity<?> saveImageProduct(@PathVariable String productId, @RequestParam("files") MultipartFile[] files){
+        return ResponseEntity.status(HttpStatus.CREATED).body(imageService.addImageToProduct(productId, files));
     }
 }
