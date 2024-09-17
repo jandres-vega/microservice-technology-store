@@ -10,6 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 @EnableConfigurationProperties
 public class S3DataSource implements IBucket {
@@ -28,22 +31,25 @@ public class S3DataSource implements IBucket {
     }
 
     @Override
-    public BucketDTO uploadFile(MultipartFile file) {
+    public List<BucketDTO> uploadFile(MultipartFile[] files) {
+        List<BucketDTO> bucketDTOList = new ArrayList<>();
         try {
-            String fileName = file.getOriginalFilename();
+            for(MultipartFile file: files){
+                String fileName = file.getOriginalFilename();
 
-            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(fileName)
-                    .build();
+                PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                        .bucket(bucketName)
+                        .key(fileName)
+                        .build();
 
-            s3Client.getClientAWS(accessKey, secretKey)
-                    .putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
+                s3Client.getClientAWS(accessKey, secretKey)
+                        .putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
 
-
-            return new BucketDTO(fileName, bucketName);
+                bucketDTOList.add(new BucketDTO(fileName, bucketName));
+            }
+            return bucketDTOList;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error to upload file");
         }
     }
 }
