@@ -26,7 +26,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "id_category", insertable = false, updatable = false)
     private Category category;
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<Image> images;
 
 }
