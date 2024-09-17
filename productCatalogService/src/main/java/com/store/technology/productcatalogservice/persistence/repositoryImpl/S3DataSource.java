@@ -2,16 +2,13 @@ package com.store.technology.productcatalogservice.persistence.repositoryImpl;
 
 import com.store.technology.productcatalogservice.domain.dto.response.BucketDTO;
 import com.store.technology.productcatalogservice.domain.repository.IBucket;
-import com.store.technology.productcatalogservice.remote.S3Client;
+import com.store.technology.productcatalogservice.remote.S3Config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Objects;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Configuration
 @EnableConfigurationProperties
@@ -24,30 +21,29 @@ public class S3DataSource implements IBucket {
     @Value("${aws.credentials.secretKey}")
     private String secretKey;
 
-    S3Client s3Client;
+    S3Config s3Client;
 
     public S3DataSource() {
-        this.s3Client = new S3Client();
+        this.s3Client = new S3Config();
     }
 
     @Override
     public BucketDTO uploadFile(MultipartFile file) {
         try {
             String fileName = file.getOriginalFilename();
-            s3Client.getClientAWS(accessKey, secretKey).putObject(
-                    bucketName, fileName, convertMultiPartToFile(file));
+
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileName)
+                    .build();
+
+            s3Client.getClientAWS(accessKey, secretKey)
+                    .putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
+
 
             return new BucketDTO(fileName, bucketName);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static File convertMultiPartToFile(MultipartFile multipartFile) throws IOException {
-        File file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        FileOutputStream outputStream = new FileOutputStream(file);
-        outputStream.write(multipartFile.getBytes());
-        outputStream.close();
-        return file;
     }
 }
