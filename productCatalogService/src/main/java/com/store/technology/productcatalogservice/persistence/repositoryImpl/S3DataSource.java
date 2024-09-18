@@ -2,10 +2,12 @@ package com.store.technology.productcatalogservice.persistence.repositoryImpl;
 
 import com.store.technology.productcatalogservice.domain.dto.response.BucketDTO;
 import com.store.technology.productcatalogservice.domain.repository.IBucket;
+import com.store.technology.productcatalogservice.exceptions.BadRequestException;
 import com.store.technology.productcatalogservice.remote.S3Config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
@@ -31,7 +33,9 @@ public class S3DataSource implements IBucket {
     }
 
     @Override
-    public List<BucketDTO> uploadFile(MultipartFile[] files) {
+    public List<BucketDTO> uploadFile(List<MultipartFile> files) {
+
+        if(files.size() < 4) throw new BadRequestException("The number of images must be at least 4", "images", HttpStatus.BAD_REQUEST);
         List<BucketDTO> bucketDTOList = new ArrayList<>();
         try {
             for(MultipartFile file: files){
