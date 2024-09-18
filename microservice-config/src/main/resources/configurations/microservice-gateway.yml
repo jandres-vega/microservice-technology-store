@@ -14,3 +14,7 @@ spring:
           uri: lb://productCatalogService
           predicates:
             - Path=/api/v1/**
+        - id: user
+          uri: lb://userManagementService
+          predicates:
+            - Path=/api/v1/**
