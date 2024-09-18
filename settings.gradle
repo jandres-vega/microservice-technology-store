@@ -1,5 +1,6 @@
 rootProject.name = 'microservice-technology-store'
 
+include 'authentication'
 include 'productCatalogService'
 include 'adminService'
 include 'discountService'
