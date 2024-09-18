@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface IBucket {
 
-    List<BucketDTO> uploadFile(MultipartFile[] file);
+    List<BucketDTO> uploadFile(List<MultipartFile> file);
 }
