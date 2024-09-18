@@ -1,5 +1,6 @@
 package com.store.technology.productcatalogservice.domain.service;
 
+import com.store.technology.productcatalogservice.domain.dto.request.ImageReq;
 import com.store.technology.productcatalogservice.domain.dto.request.ImageRequestDTO;
 import com.store.technology.productcatalogservice.domain.dto.response.BucketDTO;
 import com.store.technology.productcatalogservice.domain.dto.response.ProductResponseDTO;
@@ -24,7 +25,7 @@ public class ImageService {
         this.bucketDataSource = bucketDataSource;
     }
 
-    public ProductResponseDTO addImageToProduct(String productId, MultipartFile[] files) {
+    public ProductResponseDTO addImageToProduct(String productId, List<MultipartFile> files) {
         ProductResponseDTO product = productService.getProductById(productId);
 
         List<BucketDTO> bucketDTO = bucketDataSource.uploadFile(files);
