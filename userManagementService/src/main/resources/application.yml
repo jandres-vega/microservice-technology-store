@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: userManagementService
+  config:
+    import: optional:configserver:http://localhost:3000
