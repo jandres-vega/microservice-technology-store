@@ -10,5 +10,5 @@ public class CategoryResponseWithProductsDTO {
     private String id;
     private String category;
     private String description;
-    private List<ProductResponseDTO> products;
+    private List<ProductResponseDTO> products_list;
 }

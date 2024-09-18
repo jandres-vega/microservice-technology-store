@@ -11,7 +11,7 @@ import org.mapstruct.Mappings;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ProductMapper.class})
 public interface CategoryMapper {
 
     @Mappings({
@@ -33,7 +33,7 @@ public interface CategoryMapper {
             @Mapping(source = "idCategory", target = "id"),
             @Mapping(source = "nameCategory", target = "category"),
             @Mapping(source = "description", target = "description"),
-            @Mapping(source = "products", target = "products"),
+            @Mapping(source = "products", target = "products_list")
     })
     CategoryResponseWithProductsDTO toCategoryResponseWithProductsDTO(Category category);
 

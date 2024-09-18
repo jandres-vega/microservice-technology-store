@@ -2,16 +2,18 @@ package com.store.technology.productcatalogservice.persistence.repositoryImpl;
 
 import com.store.technology.productcatalogservice.domain.dto.response.BucketDTO;
 import com.store.technology.productcatalogservice.domain.repository.IBucket;
-import com.store.technology.productcatalogservice.remote.S3Client;
+import com.store.technology.productcatalogservice.exceptions.BadRequestException;
+import com.store.technology.productcatalogservice.remote.S3Config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableConfigurationProperties
@@ -24,30 +26,34 @@ public class S3DataSource implements IBucket {
     @Value("${aws.credentials.secretKey}")
     private String secretKey;
 
-    S3Client s3Client;
+    S3Config s3Client;
 
     public S3DataSource() {
-        this.s3Client = new S3Client();
+        this.s3Client = new S3Config();
     }
 
     @Override
-    public BucketDTO uploadFile(MultipartFile file) {
+    public List<BucketDTO> uploadFile(List<MultipartFile> files) {
+
+        if(files.size() < 4) throw new BadRequestException("The number of images must be at least 4", "images", HttpStatus.BAD_REQUEST);
+        List<BucketDTO> bucketDTOList = new ArrayList<>();
         try {
-            String fileName = file.getOriginalFilename();
-            s3Client.getClientAWS(accessKey, secretKey).putObject(
-                    bucketName, fileName, convertMultiPartToFile(file));
+            for(MultipartFile file: files){
+                String fileName = file.getOriginalFilename();
 
-            return new BucketDTO(fileName, bucketName);
+                PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                        .bucket(bucketName)
+                        .key(fileName)
+                        .build();
+
+                s3Client.getClientAWS(accessKey, secretKey)
+                        .putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
+
+                bucketDTOList.add(new BucketDTO(fileName, bucketName));
+            }
+            return bucketDTOList;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error to upload file");
         }
-    }
-
-    private static File convertMultiPartToFile(MultipartFile multipartFile) throws IOException {
-        File file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        FileOutputStream outputStream = new FileOutputStream(file);
-        outputStream.write(multipartFile.getBytes());
-        outputStream.close();
-        return file;
     }
 }

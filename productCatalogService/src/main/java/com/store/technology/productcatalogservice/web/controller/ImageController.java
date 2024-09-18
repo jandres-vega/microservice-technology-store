@@ -1,10 +1,14 @@
 package com.store.technology.productcatalogservice.web.controller;
 
+import com.store.technology.productcatalogservice.domain.dto.request.ImageReq;
 import com.store.technology.productcatalogservice.domain.service.ImageService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("images")
@@ -17,9 +21,7 @@ public class ImageController {
     }
 
     @PostMapping("/upload/{productId}")
-    public ResponseEntity<?> saveImageProduct(@PathVariable String productId, @RequestParam("file") MultipartFile file){
-        System.out.println("PRODUCT_ID " + productId);
-        System.out.println("IMAGE CONTROLLER " + file);
-        return ResponseEntity.status(HttpStatus.CREATED).body(imageService.addImageToProduct(productId, file));
+    public ResponseEntity<?> saveImageProduct(@Valid @PathVariable String productId, @ModelAttribute ImageReq files){
+        return ResponseEntity.status(HttpStatus.CREATED).body(imageService.addImageToProduct(productId, files.getUrlImages()));
     }
 }
