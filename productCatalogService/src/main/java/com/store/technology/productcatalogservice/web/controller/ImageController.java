@@ -19,7 +19,7 @@ public class ImageController {
     public ImageController(ImageService imageService) {
         this.imageService = imageService;
     }
-    
+
     @PostMapping("/upload/{productId}")
     public ResponseEntity<?> saveImageProduct(@Valid @PathVariable String productId, @ModelAttribute ImageReq files){
         return ResponseEntity.status(HttpStatus.CREATED).body(imageService.addImageToProduct(productId, files.getUrlImages()));
