@@ -1,0 +1,16 @@
+server:
+  port: 4001
+  servlet:
+    context-path: /api/v1/
+spring:
+  application:
+    name: userManagementService
+  datasource:
+    url: jdbc:mysql://localhost:3306/user_management
+    username: root
+    password: Andres1201
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
