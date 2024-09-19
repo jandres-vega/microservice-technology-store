@@ -16,10 +16,9 @@ public class UserControllers {
     public UserControllers(UserService userService) {
         this.userService = userService;
     }
-    
+
     @PostMapping("/register")
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO) {
-        System.out.println("UserRequestDTO: " + userRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userRequestDTO));
     }
 }
