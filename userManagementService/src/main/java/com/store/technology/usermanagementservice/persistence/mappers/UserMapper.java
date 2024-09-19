@@ -12,12 +12,21 @@ import org.mapstruct.Mappings;
 public interface UserMapper {
 
     @Mappings({
-            @Mapping(source = "idUser", target = "id"),
-            @Mapping(source = "userName", target = "user_name"),
-            @Mapping(source = "email", target = "email"),
+            @Mapping(target = "idUser", ignore = true),
+            @Mapping(target = "userName", source = "user_name"),
+            @Mapping(target = "firstName", source = "first_name"),
+            @Mapping(target = "lastName", source = "last_name"),
+            @Mapping(target = "phone", ignore = true),
+            @Mapping(target = "addresses", ignore = true)
+    })
+    User toUser(UserRequestDTO userRequestDTO);
+
+    @Mappings({
+            @Mapping(target = "first_name", source = "firstName"),
+            @Mapping(target = "id", source = "idUser"),
+            @Mapping(target = "last_name", source = "lastName"),
+            @Mapping(target = "email", source = "email")
     })
     UserResponseDTO toUserResponseDTO(User user);
 
-    @InheritInverseConfiguration(name = "toUserResponseDTO")
-    User toUser(UserRequestDTO userRequestDTO);
 }
