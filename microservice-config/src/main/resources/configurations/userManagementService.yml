@@ -1,7 +1,5 @@
 server:
   port: 4001
-  servlet:
-    context-path: /api/v1/
 spring:
   application:
     name: userManagementService
@@ -14,3 +12,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
