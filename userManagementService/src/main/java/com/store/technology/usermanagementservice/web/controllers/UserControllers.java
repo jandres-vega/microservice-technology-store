@@ -16,12 +16,7 @@ public class UserControllers {
     public UserControllers(UserService userService) {
         this.userService = userService;
     }
-
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.status(HttpStatus.OK).body("User Management Service is up and running");
-    }
-
+    
     @PostMapping("/register")
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO) {
         System.out.println("UserRequestDTO: " + userRequestDTO);
