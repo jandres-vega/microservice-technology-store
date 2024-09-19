@@ -23,7 +23,6 @@ public class User {
     private String phone;
     private String email;
     private String password;
-    private Boolean active;
     @OneToMany(mappedBy = "user")
     private List<Address> addresses;
 }
