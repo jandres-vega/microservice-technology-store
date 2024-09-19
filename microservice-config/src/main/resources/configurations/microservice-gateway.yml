@@ -1,20 +1,26 @@
 server:
   port: 3002
-
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: gateway
 spring:
-  application:
-    name: microservice-gateway
   cloud:
     gateway:
       discovery:
         locator:
+          lowerCaseServiceId: true
           enabled: true
-      routes:
-        - id: product
-          uri: lb://productCatalogService
           predicates:
-            - Path=/api/v1/**
-        - id: user
-          uri: lb://userManagementService
-          predicates:
-            - Path=/api/v1/**
+            - name: Path
+              args:
+                pattern: "'/api/'+serviceId.toLowerCase()+'/**'"
+          filters:
+            - name: RewritePath
+              args:
+                regexp: "'/api/' + serviceId.toLowerCase() + '/(?<remaining>.*)'"
+                replacement: "{metadata.get('contextPath') != null ? metadata.get('contextPath') : ''} + '/${remaining}'"
