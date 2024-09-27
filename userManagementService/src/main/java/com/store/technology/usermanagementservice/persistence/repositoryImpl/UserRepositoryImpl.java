@@ -8,6 +8,8 @@ import com.store.technology.usermanagementservice.persistence.entity.User;
 import com.store.technology.usermanagementservice.persistence.mappers.UserMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
@@ -24,4 +26,10 @@ public class UserRepositoryImpl implements UserRepository {
         User userSaved = userMapper.toUser(userRequestDTO);
         return userMapper.toUserResponseDTO(userCrudRepository.save(userSaved));
     }
+
+    @Override
+    public boolean isUserExists(String userName, String email) {
+        return userCrudRepository.existsUserByUserNameAndEmail(userName, email);
+    }
+
 }
