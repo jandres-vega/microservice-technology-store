@@ -12,5 +12,6 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_role")
     private String idRole;
+    @Enumerated(EnumType.STRING)
     private TypeRole name;
 }

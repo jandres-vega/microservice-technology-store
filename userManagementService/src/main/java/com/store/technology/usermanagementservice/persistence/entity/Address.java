@@ -22,7 +22,7 @@ public class Address {
     private String postalCode;
     private String country;
     @Column(name = "is_default")
-    private String isDefault;
+    private boolean isDefault;
     @Column(name = "id_user")
     private String idUser;
     @ManyToOne
