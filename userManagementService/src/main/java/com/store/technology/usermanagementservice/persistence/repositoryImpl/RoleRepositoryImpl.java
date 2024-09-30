@@ -8,7 +8,8 @@ import com.store.technology.usermanagementservice.persistence.enums.TypeRole;
 import com.store.technology.usermanagementservice.persistence.mappers.RoleMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
+
 
 @Repository
 public class RoleRepositoryImpl implements RoleRepository {
@@ -32,5 +33,9 @@ public class RoleRepositoryImpl implements RoleRepository {
         return roleCrudRepository.findByName(typeRole);
     }
 
-
+    @Override
+    public List<RoleRequestDTO> getRoles() {
+        List<Role> rolesFind = (List<Role>) roleCrudRepository.findAll();
+        return roleMapper.toRoleRequestDTO(rolesFind);
+    }
 }

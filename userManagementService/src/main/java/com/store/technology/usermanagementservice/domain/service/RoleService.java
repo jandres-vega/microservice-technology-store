@@ -7,6 +7,8 @@ import com.store.technology.usermanagementservice.persistence.entity.Role;
 import com.store.technology.usermanagementservice.persistence.enums.TypeRole;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoleService {
 
@@ -27,6 +29,10 @@ public class RoleService {
 
     public Role findByName(TypeRole typeRole) {
         return roleRepository.findByName(typeRole);
+    }
+
+    public List<RoleRequestDTO> getRoles() {
+        return roleRepository.getRoles();
     }
 
 }

@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface RoleMapper {
 
@@ -18,4 +20,6 @@ public interface RoleMapper {
 
     @InheritInverseConfiguration
     RoleRequestDTO toRoleRequestDTO(Role role);
+
+    List<RoleRequestDTO> toRoleRequestDTO(List<Role> roles);
 }
