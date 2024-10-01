@@ -4,5 +4,5 @@ import com.store.technology.authentication.persistence.entity.UserCredentials;
 
 public interface UserCredentialsRepository {
 
-    UserCredentials finById(String email, String password);
+    UserCredentials finById(String email);
 }

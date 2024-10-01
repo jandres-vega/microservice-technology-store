@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class JwtUtil {
 
-    @Value("${SECRET}")
-    private static String SECRET;
+//    @Value("${SECRET}")
+    private static final String SECRET = "secret";
     private static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
 
     public String createToken(String email){
