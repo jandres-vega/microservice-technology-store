@@ -15,12 +15,8 @@ public class UserCredentials {
     private String email;
     @Column(name = "password_hash")
     private String passwordHash;
-    @Column(name = "password_salt")
-    private String passwordSalt;
-    @Column(name = "two_factor_secret")
-    private String twoFactorSecret;
     @Column(name = "is_activated")
-    private Boolean isActivated;
+    private Boolean isActivated = true;
     @Column(name = "id_user_credential")
     private String idUserCredential;
     @OneToOne(mappedBy = "userCredentials")
